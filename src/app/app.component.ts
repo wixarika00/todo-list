@@ -1,10 +1,67 @@
 import { Component } from '@angular/core';
+import {Task} from './task';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'first-project';
+  taskName!: string
+  config: {[key: string]: string} | null = null;
+  tasks: Task[] = [
+    {
+      name: 'Siłownia',
+      deadline: '2020-01-02',
+      done: false,
+    },
+    {
+      name: 'Nauka Angulara',
+      deadline: '2020-01-03',
+      done: false,
+    },
+    {
+      name: 'Sprzątanie kuwety',
+      deadline: '2020-01-04',
+      done: false,
+    },
+  ];
+
+  constructor() {
+    setTimeout(() => {
+    this.config = {
+      title: 'Lista zadan',
+      footer: ' © Lista zadań,All rights reserved.',
+      date: new Date().toDateString()
+    };
+  }, 500);
+  }
+
+  clearTasks() {
+    this.tasks = [];
+  }
+
+  onKeyUp(event: KeyboardEvent){
+    const target = event.target as HTMLInputElement;
+    this.taskName = target.value;
+  }
+
+  createTask() {
+    const task: Task = {
+      name: this.taskName,
+      deadline: '2020-02-02',
+      done: false,
+    };
+    this.tasks.push(task);
+
+  }
+  // title = 'Lista Zadan';
+
+  // getFooter(): string {
+  //   return ' © Lista zadań,All rights reserved.'
+  // }
+
+  // getDate(): Date{
+  //   return new Date();
+  // }
 }
