@@ -7,8 +7,12 @@ import {Task} from './task';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  editMode= false;
   taskName = 'Sugerowane zadanie codzienne: odkurzanie';
   taskDate = '';
+  show = true;
+  day = new Date().getDay(); //zwraca index 0 - Sunday, 1 - Monday
+
   config: {[key: string]: string} | null = null;
   tasks: Task[] = [
     {
@@ -31,17 +35,17 @@ export class AppComponent {
   constructor() {
     setTimeout(() => {
     this.config = {
-      title: 'Lista zadan',
-      footer: ' © Lista zadań,All rights reserved.',
+      title: 'Lista zadań',
+      footer: ' © Lista zadań. All rights reserved.',
       date: new Date().toDateString()
     };
   }, 500);
+  this.sortTasks();
   }
 
   clearTasks() {
     this.tasks = [];
   }
-
 
   createTask() {
     const task: Task = {
@@ -52,6 +56,26 @@ export class AppComponent {
     this.tasks.push(task);
     this.taskName = '';
     this.taskDate = '';
+    this.sortTasks();
+  }
+
+  switchEditMode(){
+    this.editMode=!this.editMode;
+  }
+
+  markTaskAsDone(task:Task) {
+    task.done = true;
+    this.sortTasks();
+  }
+
+  deleteTask(task: Task) {
+    this.tasks = this.tasks.filter(e => e !== task);
+    this.sortTasks();
+  }
+
+  private sortTasks() {
+    this.tasks = this.tasks.sort((a: Task, b: Task ) =>
+      a.done ===b.done ? 0 : a.done? 1 : -1 );
   }
   // title = 'Lista Zadan';
 
