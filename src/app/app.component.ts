@@ -26,7 +26,7 @@ export class AppComponent {
       done: false,
     },
     {
-      name: 'Sprzątanie kuwety',
+      name: 'Sprzątanie mieszkania',
       deadline: '2020-01-04',
       done: false,
     },
